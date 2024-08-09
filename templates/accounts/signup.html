@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+{% block content %}
+  <h2>Sign up</h2>
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}  <!-- form.as_p은 뷰(view)로부터 전달받을 파라미터를 <p> 태그로 감싸서 랜더링한다. -->
+    <button type="submit">Sign Up</button>
+  </form>
+{% endblock %}

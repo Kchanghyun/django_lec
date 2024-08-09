@@ -19,4 +19,6 @@ from . import views
 
 urlpatterns = [
     path('', views.index),
+    path('<int:content_id>/', views.detail, name='detail'),
+    path('community/', views.notice_index, name='notice_index')
 ]
