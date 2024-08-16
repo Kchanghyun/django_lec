@@ -1,6 +1,8 @@
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import get_object_or_404, render, redirect
+from django.contrib.auth.decorators import login_required
 from .models import MainContent
 from .models import Notice
+from .forms import CommentForm
 
 # Create your views here.
 
@@ -27,3 +29,25 @@ def notice_index(request):
     community_content_list = Notice.objects.order_by('-created_at')
     context = {'community_content_list': community_content_list}
     return render(request, 'pages/community.html', context)
+
+
+def comment_create(request, content_id):
+    content_list = get_object_or_404(MainContent, pk=content_id)
+
+    if request.method == 'POST':
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.content_list = content_list
+            comment.author = request.user
+            comment.save()
+            return redirect('detail', content_id=content_list.id)
+    else:
+        form = CommentForm()
+        context = {'content_list' : content_list, 'form': form}
+        return render(request, 'mysite/content_detail.html', context)
+
+
+@login_required(login_url='accounts:login')
+def comment_create(request, content_id):
+    content_list = get_object_or_404(MainContent, pk=content_id)
