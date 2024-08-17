@@ -3,10 +3,23 @@ from django.contrib.auth.models import User
 # Create your models here.
 
 class MainContent(models.Model):
-    title = models.CharField(max_length=200)
-    content = models.TextField()
+    title = models.CharField(max_length=200)  # 제품명
+    content = models.TextField()  # 제품 설명
     pub_date = models.DateTimeField('date published')
 
+    def __str__(self):
+        return self.title
+
+class Product(models.Model):
+    name = models.CharField(max_length=200)  # 제품명
+    price = models.DecimalField(max_digits=10, decimal_places=0)  # 제품 가격
+    description = models.TextField()  # 제품 설명
+    image = models.ImageField(upload_to='product_images/')  # 제품 사진
+    pub_date = models.DateTimeField(auto_now_add=True)
+    category = models.CharField(max_length=100, default='default_category')
+
+    def __str__(self):
+        return self.name
 
 class Notice(models.Model):
     title = models.CharField(max_length=200) # 공지사항 제목
@@ -19,7 +32,7 @@ class Notice(models.Model):
 
 class Comment(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE)  # 작성자
-    content_list = models.ForeignKey(MainContent, on_delete=models.CASCADE)  # 제목
+    content_list = models.ForeignKey(Product, on_delete=models.CASCADE)  # 제목
     content = models.TextField()  # 작성 내용
     create_date = models.DateTimeField(auto_now_add=True)  # 작성 날짜
     modify_date = models.DateTimeField(auto_now=True)  # 수정 날짜

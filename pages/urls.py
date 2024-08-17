@@ -22,4 +22,10 @@ urlpatterns = [
     path('company/', views.company),
     path('mysite/product/', views.product),
     path('community/', views.community),
+    path('mysite/product/head/', views.headsets, name='headsets'),
+    path('mysite/product/notebook/', views.notebook, name='notebook'),
+    path('mysite/product/keyboard/', views.keyboard, name='keyboard'),
+    path('mysite/product/mouse/', views.mouse, name='mouse'),
+    path('mysite/product/<int:content_id>/', views.detail, name='detail'),
+    # path('mysite/product/head/<int:product_id>/', views.product_detail, name='product_detail'),
 ]

@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+{% block content %}
+<style>
+    /* 사이드바 스타일 */
+    .sidebar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 200px; /* 사이드바의 너비 설정 */
+        height: 100vh; /* 사이드바의 높이를 전체 화면으로 설정 */
+        background-color: #f8f9fa; /* 사이드바 배경색 설정 */
+        padding: 20px;
+        overflow-y: auto; /* 콘텐츠가 사이드바를 넘어서면 스크롤 가능 */
+    }
+
+    .content {
+        margin-left: 220px; /* 사이드바 너비만큼 여백을 줌 */
+        padding: 20px;
+    }
+</style>
+<!-- Header-->
+<header class="bg-dark py-1">
+    <div class="container px-4 px-lg-5 my-5">
+        <div class="text-center text-white">
+            <h1 class="display-4 fw-bolder">환영합니다.</h1>
+            <p class="lead fw-normal text-white-50 mb-0">거짓 없이 상품을 소개시켜 드리겠습니다.</p>
+        </div>
+    </div>
+</header>
+<!-- Section-->
+<section class="py-5">
+    <aside class="side-bar">
+        <div class="container px-4 px-lg-5 mt-5">
+            <div class="d-flex flex-column text-end">
+                <a href="{% url 'headsets' %}" class="btn btn-outline-primary mb-2">헤드셋</a>
+                <a href="{% url 'notebook' %}" class="btn btn-outline-primary mb-2">노트북</a>
+                <a href="{% url 'keyboard' %}" class="btn btn-outline-primary mb-2">키보드</a>
+                <a href="{% url 'mouse' %}" class="btn btn-outline-primary">마우스</a>
+            </div>
+        </div>
+    </aside>
+    <div class="container px-4 px-lg-5 mt-5">
+        <div class="row">
+            {% for product in products %}
+            <div class="col-lg-3 col-md-6 mb-5">
+                <!--큰 화면(lg)에서는 한 줄에 4개의 상품 표시, 중간크기 화면(md)에서는 한 줄에 2개의 상품 표시, 각 상품의 비율은 12를 기준으로 계산되기 때문에 col-lg-3은 12 / 4 = 3이 되어 한 줄에 4개의 상품이 배치된다.-->
+                <div class="card h-100">
+                    <!-- product image-->
+                    <img class="card-img-top" src="{{ product.image.url }}" alt=" {{ product.name }}"/>
+                    <!-- product details-->
+                    <div class="card-body p-4">
+                        <div class="text-center">
+                            <!-- product name-->
+                            <h5 class="fw-bolder">{{ product.name }}</h5>
+                            <!-- product price -->
+                            {{ product.price }}원
+                        </div>
+                    </div>
+                    <!-- product actions-->
+                    <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                        <div class="text-center">
+                            <a class="btn btn-outline-dark mt-auto" href="{% url 'detail' product.id %}">상품 자세히보기</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endblock %}

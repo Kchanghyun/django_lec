@@ -1,9 +1,15 @@
 {% extends 'base.html' %}
 {% block content %}
-<h2>{{content_list.title}}</h2>
-<div>
-    {{content_list.content}}
-</div>
+<h2>{{ content_list.name }}</h2>
+{% if content_list.image %}
+    <img src="{{ content_list.image.url }}" alt="{{ content_list.name }}" class="img-fluid mb-3">
+{% endif %}
+<p>가격 : {{ content_list.price }}원</p>
+<p>설명 : {{ content_list.description }}</p>
+<br>
+<br>
+<br>
+<p>업로드 날짜 : {{ content_list.pub_date }}</p>
 <section class="mb-5">
     <div class="card bg-light">
         <div class="card-body">
@@ -16,14 +22,14 @@
             {% for comment in content_list.comment_set.all %}
             <div class="d-flex">
                 <div class="ms-3">
-                    <div class="fw-bold">{{ comment.author.username }} &nbsp&nbsp {{ comment.create_date }}</div>
-                    {% if comment.create_date != comment.modify.date %}
-                    / 수정일자: {{ comment.modify_date }}
-                    {% endif %}
-                    {% if request.user == comment.author %}
+                    <div class="fw-bold">{{ comment.author.username }} &nbsp&nbsp {{ comment.create_date }}
+                        {% if comment.create_date != comment.modify.date %} / 수정일자: {{ comment.modify_date }}
+                        {% endif %}
+                        {% if request.user == comment.author %}
                         <a href="{% url 'comment_update' comment.id %}" class="btn btn-sm btn-outline-secondary">수정</a>
                         <a href="{% url 'comment_delete' comment.id %}" class="btn btn-sm btn-outline-secondary">삭제</a>
-                    {% endif %}
+                        {% endif %}
+                    </div>
                     {{ comment.content }}
                 </div>
             </div>
