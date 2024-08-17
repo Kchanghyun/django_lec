@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>{{ notice_list.title }}</h2>
+<p>설명 : {{ notice_list.content }}</p>
+<br>
+<br>
+<br>
+<p>업로드 날짜 : {{ notice_list.created_at }}</p>
+{% endblock %}

@@ -1,7 +1,8 @@
 from django.shortcuts import get_object_or_404, render
 from mysite.models import MainContent, Product
 from mysite.models import Notice
-
+from datetime import timedelta
+from django.utils import timezone
 
 # Create your views here.
 
@@ -18,21 +19,41 @@ def product(request):
     return render(request, 'pages/product_category.html')
 
 
-def community(request):
+def support(request):
     # return render(request, 'pages/community.html')
-    community_content_list = Notice.objects.order_by('-created_at')
-    context = {'community_content_list': community_content_list}
+    community_content_list = Notice.objects.filter(category='공지사항').order_by('-created_at')
+    context = {
+        'page_title': '공지사항',
+        'community_content_list': community_content_list
+    }
     return render(request, 'pages/community.html', context)
+
+
+def faq(request):
+    # return render(request, 'pages/community.html')
+    community_content_list = Notice.objects.filter(category='Q&A')
+    context = {
+        'page_title': 'Q&A',
+        'community_content_list': community_content_list
+    }
+    return render(request, 'pages/community.html', context)
+
 
 
 def products(request):
     return render(request, 'pages/products.html')
 
 
-def detail(request, content_id):
-    content_list = get_object_or_404(Product, pk=content_id)
-    context = {'content_list': content_list}
+def detail(request, product_id):
+    product_list = get_object_or_404(Product, pk=product_id)
+    context = {'product_list': product_list}
     return render(request, 'mysite/content_detail.html', context)
+
+
+def sup_detail(request, notice_id):
+    notice_list = get_object_or_404(Notice, pk=notice_id)
+    context = {'notice_list': notice_list}
+    return render(request, 'pages/community_detail.html', context)
 
 
 def product_list(request):
@@ -62,4 +83,11 @@ def keyboard(request):
 
 def mouse(request):
     products = Product.objects.filter(category='마우스')
+    return render(request, 'pages/products.html', {'products': products})
+
+
+def new(request):
+    now = timezone.now()
+    ten_days_ago = now - timedelta(days=10)
+    products = Product.objects.filter(pub_date__gte=ten_days_ago)
     return render(request, 'pages/products.html', {'products': products})

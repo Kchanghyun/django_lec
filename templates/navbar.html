@@ -11,7 +11,7 @@
             <ul class="navbar-nav text-uppercase ms-auto py-4 py-lg-0">
                 <li class="nav-item"><a class="nav-link" href="/pages/#services">product</a></li>
                 <li class="nav-item"><a class="nav-link" href="/company/">company info</a></li>
-                <li class="nav-item"><a class="nav-link" href="/community/">Community</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'support' %}">Community</a></li>
                 {% if user.is_authenticated %} <!-- User.is_authenticated는 사용자가 인증되었는지 여부를 확인할 때 사용한다. -->
 <!--                <li class="nav-item"><a class="nav-link" href="{% url 'accounts:logout' %}">{{ user.username }} (logout)</a></li>-->
                 <li class="nav-item"><a class="nav-link" href="{% url 'accounts:logout' %}"><i class="fas fa-user"></i>{{ user.username }}님 환영합니다.(logout)</a></li>

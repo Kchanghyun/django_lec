@@ -25,7 +25,8 @@ urlpatterns = [
     path('mysite/', include('mysite.urls')),
     path('', include('pages.urls')),
     path('accounts/', include('accounts.urls')),
-    path('pages/', include('pages.urls'))
+    path('pages/', include('pages.urls')),
+    path('community/', include('pages.urls')),
 ]
 
 if settings.DEBUG:

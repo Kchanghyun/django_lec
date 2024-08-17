@@ -21,12 +21,14 @@ def index(request):
 
 
 
-def notice_index(request):
-    community_content_list = Notice.objects.order_by('-created_at')
-    context = {'community_content_list': community_content_list}
-    return render(request, 'pages/community.html', context)
+# def notice_index(request):
+#     community_content_list = Notice.objects.filter(category='공지사항').order_by('-created_at')
+#     context = {'community_content_list': community_content_list}
+#     return render(request, 'pages/community.html', context)
 
-
+# def mouse(request):
+#     products = Product.objects.filter(category='마우스')
+#     return render(request, 'pages/products.html', {'products': products})
 
 @login_required(login_url='accounts:login')
 def comment_create(request, content_id):

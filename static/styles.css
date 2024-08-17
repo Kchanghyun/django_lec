@@ -11335,6 +11335,7 @@ body {
   position: fixed; /* 스크롤을 따라오도록 지정 */
   background-color: rgba(0, 0, 0, 0);
   width: var(--side-bar-width);
+  flex-shrink: 0;
   min-height: var(--side-bar-height); /* 사이드바의 높이를 전체 화면 높이의 90%로 지정 */
   margin-top: calc((100vh - var(--side-bar-height)) / 2); /* 사이드바 위와 아래의 마진을 동일하게 지정 */
 }
@@ -11347,4 +11348,23 @@ body {
   padding-top: 20px;
   padding-bottom: 20px;
   padding-left: 50px;
+}
+
+.content {
+  flex-grow: 1;
+  padding: 20px;
+  background-color: #fff
+}
+/* 화면 너비가 768px 이하일 때 사이드바 숨기기 */
+@media (max-width: 768px) {
+  .side-bar {
+    transform: translateX(-100%); /* 사이드바를 화면 밖으로 이동시켜 숨깁니다 */
+  }
+}
+
+/* 사이드바를 화면에 보이게 하려면 */
+@media (min-width: 769px) {
+  .side-bar {
+    transform: translateX(0); /* 사이드바를 화면 안으로 이동시켜 보이게 합니다 */
+  }
 }
