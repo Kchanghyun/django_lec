@@ -41,7 +41,7 @@ def comment_create(request, content_id):
             comment.content_list = content_list
             comment.author = request.user
             comment.save()
-            return redirect('detail', content_id=content_list.id)
+            return redirect('detail', product_id=content_list.id)
     else:
         form = CommentForm()
         context = {'content_list': content_list, 'form': form}
@@ -59,7 +59,7 @@ def comment_update(request, comment_id):
         if form.is_valid():
             comment = form.save(commit=False)
             comment.save()
-            return redirect('detail', content_id=comment.content_list.id)
+            return redirect('detail', product_id=comment.content_list.id)
     else:
         form = CommentForm(instance=comment)
 
@@ -75,4 +75,4 @@ def comment_delete(request, comment_id):
         raise PermissionDenied
     else:
         comment.delete()
-    return redirect('detail', content_id=comment.content_list.id)
+    return redirect('detail', product_id=comment.content_list.id)
